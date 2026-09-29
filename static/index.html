@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCBZ Audit Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet Draw CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header div class="header"> 
+            <h1>CCBZ Audit Map</h1>
+            <div class="header-controls">
+                <input type="file" id="csvFile" accept=".csv" style="display: none;">
+                <button id="uploadBtn" class="btn btn-primary">Upload CSV</button>
+                <button id="exportMapBtn" class="btn btn-secondary">Export Map (HTML)</button>
+                <button id="exportOfflineTilesBtn" class="btn btn-secondary">Export Offline (with tiles)</button>
+                <button id="exportCsvBtn" class="btn btn-secondary">Export CSV</button>
+                <button id="exportKmlBtn" class="btn btn-secondary">Export KML (Google Maps)</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="panel">
+                    <h2>Filters</h2>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showWalkingDistance" checked>
+                        Show Walking Distance Indicators
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showOverlays" checked>
+                        Show Non-Coordinate Overlays
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showClusters" checked>
+                        Show Areas (Clusters)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showDrawnAreas" checked>
+                        Show Drawn Areas
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showFreehand" checked>
+                        Show Pencil Drawings
+                    </label>
+                </div>
+
+                <div class="panel">
+                    <h2>Pencil (Freehand)</h2>
+                    <div style="display:flex; gap: 0.5rem; align-items:center; flex-wrap:wrap;">
+                        <button id="pencilToggleBtn" class="btn btn-secondary" style="flex:1; min-width:140px;">Pencil: Off</button>
+                        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem;">
+                            Color
+                            <input type="color" id="pencilColor" class="color-picker" value="#2ecc71">
+                        </label>
+                        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem;">
+                            Width
+                            <input type="number" id="pencilWidth" min="1" max="20" value="4" style="width:70px; padding:0.35rem; border:1px solid #ddd; border-radius:4px;">
+                        </label>
+                    </div>
+                    <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <button id="clearPencilBtn" class="btn btn-secondary" style="flex:1; min-width:140px;">Clear All Pencil</button>
+                    </div>
+                    <div style="margin-top:0.75rem; font-size:0.85rem; color:#7f8c8d;">
+                        Tip: Turn Pencil on, then click-drag on the map to draw. Press Esc to exit Pencil mode.
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>Customer Points</h2>
+                    <div id="customerList" class="customer-list"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Areas (Clusters)</h2>
+                    <div id="clusterList" class="cluster-list"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Drawn Areas</h2>
+                    <div id="drawnAreasList" class="drawn-areas-list"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Pencil Drawings</h2>
+                    <div id="pencilList" class="drawn-areas-list"></div>
+                </div>
+            </aside>
+
+            <main class="map-container">
+                <div id="map">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                        <p>Loading map...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Leaflet Draw JS -->
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    
+    <!-- Application JS -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
